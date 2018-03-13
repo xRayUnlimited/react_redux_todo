@@ -2,33 +2,36 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 class TodoForm extends React.Component {
-  state = { name: ''}
+  state = { name: '' }
 
   handleChange = (e) => {
     this.setState({ name: e.target.value })
   }
 
-  handleSubmit = (e) => { 
+  handleSubmit = (e) => {
     e.preventDefault();
     const { name } = this.state;
-    //Magic
+    const { dispatch } = this.props;
+    dispatch({ type: 'ADD_TODO', todo: name })
     this.setState({ name: '' })
   }
+
   render() {
     const { name } = this.state;
 
     return (
-      <div> 
-        <h3>Add a Todo</h3>
+      <div>
+        <h3>Add A Todo</h3>
         <form onSubmit={this.handleSubmit}>
-        <input value={name}
-        onChange={this.handleChange}
-        required />
+          <input 
+            value={name}
+            onChange={this.handleChange}
+            required
+          />
         </form>
+      </div>
     )
   }
-  }
- 
+}
 
-
-export default TodoForm;
+export default connect()(TodoForm);
