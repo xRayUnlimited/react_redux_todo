@@ -1,9 +1,11 @@
+import { ADD_TODO, TOGGLE_TODO } from '../actions/todos'
+
 const todos = ( state = [], action ) => {
   switch (action.type) {
-    case 'ADD_TODO':
+    case ADD_TODO:
       //{type: 'ADD_TODO', todo: 'Buy Milk' }
       return [action.todo, ...state]
-    case 'TOGGLE_TODO':
+    case TOGGLE_TODO:
       // { type: 'TOGGLE_TODO', id: 7 }
       return state.map( todo => {
         if (todo.id === action.id)
