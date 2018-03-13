@@ -1,13 +1,23 @@
 import React from 'react';
-import { connect } from 'react-redux'
+import { connect } from 'react-redux';
+import Todo from './Todo';
 
-const TodoList = ({ todos }) => (
+const filtered = (todos, currentFilter) => {
+  switch(currentFilter) {
+    case 'Active':
+      return todos.filter( t => !t.complete )
+    case 'Completed':
+      return todos.filter( t => t.complete )
+    default:
+      return todos
+  }
+}
+
+const TodoList = ({ todos, currentFilter }) => (
   <ul>
-    { todos.map( (t,i) => {
+    { filtered(todos, currentFilter).map( t => {
         return (
-          <li key={i}>
-            {t}
-          </li>
+          <Todo key={t.id} {...t} />
         )
       })
     }
@@ -15,7 +25,10 @@ const TodoList = ({ todos }) => (
 )
 
 const mapStateToProps = (state) => {
-  return { todos: state.todos }
+  return { 
+    todos: state.todos, 
+    currentFilter: state.currentFilter 
+  }
 }
 
 export default connect(mapStateToProps)(TodoList)
